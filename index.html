@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rohan Adhikari | Full Stack MERN Developer</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#10B981"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0f172a;
+      background-image:
+        linear-gradient(rgba(16,185,129,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      scroll-behavior: smooth;
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(16,185,129,0.1);
+    }
+  </style>
+</head>
+
+<body class="text-gray-200 relative">
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAVBAR -->
+<nav class="fixed w-full z-50 glass px-8 py-4 flex justify-between items-center">
+  <h1 class="text-xl font-bold text-primary">Rohan.dev</h1>
+  <div class="space-x-6 hidden md:flex">
+    <a href="#about" class="hover:text-primary transition">About</a>
+    <a href="#education" class="hover:text-primary transition">Education</a>
+    <a href="#skills" class="hover:text-primary transition">Skills</a>
+    <a href="#projects" class="hover:text-primary transition">Projects</a>
+    <a href="#contact" class="hover:text-primary transition">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+  <h2 class="text-4xl md:text-6xl font-bold mb-6">
+    Full Stack MERN Developer <br>
+    <span id="typed" class="text-primary"></span>
+  </h2>
+
+  <p class="max-w-2xl text-gray-400 mb-8">
+    I build scalable, secure, and production-ready web applications by combining strong backend engineering with intuitive frontend experiences.
+    My focus is on designing robust APIs, efficient database schemas, and seamless client-server communication.
+  </p>
+
+  <div class="space-x-4">
+    <a href="#projects" class="bg-primary px-6 py-3 rounded-lg text-black font-semibold hover:scale-105 transition">
+      Explore My Work
+    </a>
+    <a href="#" class="border border-primary px-6 py-3 rounded-lg hover:bg-primary hover:text-black transition">
+      Download Resume
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-24 px-6 max-w-6xl mx-auto">
+  <h3 class="text-3xl font-bold text-primary mb-10" data-aos="fade-up">About Me</h3>
+  <p class="text-gray-400 leading-8" data-aos="fade-up">
+    I am a Computer Science student and Full Stack MERN Developer passionate about building scalable and efficient web systems.
+    My expertise lies in backend architecture, RESTful API design, authentication systems using JWT, and database modeling with MongoDB.
+    <br><br>
+    I develop applications that prioritize security, performance, and maintainability. On the frontend, I craft responsive interfaces using React and Tailwind CSS, ensuring smooth user interactions and optimized state management.
+    <br><br>
+    I continuously improve my problem-solving skills through Data Structures and Algorithms practice, enabling me to write efficient and optimized code for real-world applications.
+  </p>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="py-24 px-6 bg-black/30">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-3xl font-bold text-primary mb-10" data-aos="fade-up">Education</h3>
+    <div class="glass p-8 rounded-xl">
+      <h4 class="text-xl font-semibold mb-2">B.Tech - Computer Science & IT</h4>
+      <p class="text-gray-400">Dr. A.P.J. Abdul Kalam Technical University (2023 – 2027)</p>
+      <p class="text-primary mt-2">CGPA: 8.56</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-3xl font-bold text-primary mb-10">Technical Skills</h3>
+
+    <p class="text-gray-400 mb-12 max-w-3xl">
+      My technical stack is centered around the MERN ecosystem. I focus on writing scalable backend logic,
+      building REST APIs, implementing secure authentication systems, and designing responsive UI components.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-10">
+
+      <div>
+        <h4 class="mb-2">Backend Development</h4>
+        <div class="w-full bg-gray-700 h-3 rounded">
+          <div class="bg-primary h-3 rounded skill-bar" style="width: 0%" data-width="90%"></div>
+        </div>
+        <p class="text-gray-400 mt-2 text-sm">Node.js, Express.js, REST APIs, JWT, MongoDB, Mongoose</p>
+      </div>
+
+      <div>
+        <h4 class="mb-2">Frontend Development</h4>
+        <div class="w-full bg-gray-700 h-3 rounded">
+          <div class="bg-primary h-3 rounded skill-bar" style="width: 0%" data-width="85%"></div>
+        </div>
+        <p class="text-gray-400 mt-2 text-sm">React.js, Tailwind CSS, Redux, Framer Motion</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="py-24 px-6 bg-black/30">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-3xl font-bold text-primary mb-12">Projects</h3>
+
+    <p class="text-gray-400 mb-12 max-w-3xl">
+      These projects reflect my ability to design complete full-stack systems — from UI architecture
+      to API integration and database modeling.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="glass p-6 rounded-xl project-card">
+        <h4 class="text-xl font-bold mb-4">MedLife</h4>
+        <p class="text-gray-400">
+          Doctor consultation platform with structured component architecture, real-time Firebase integration,
+          and smooth navigation using React Router.
+        </p>
+      </div>
+
+      <div class="glass p-6 rounded-xl project-card">
+        <h4 class="text-xl font-bold mb-4">TravelBuddy</h4>
+        <p class="text-gray-400">
+          Trip planning and expense management system integrating external APIs for travel insights,
+          optimized state handling and responsive design.
+        </p>
+      </div>
+
+      <div class="glass p-6 rounded-xl project-card">
+        <h4 class="text-xl font-bold mb-4">TalkingAI</h4>
+        <p class="text-gray-400">
+          AI chat interface with real-time API communication, dynamic message rendering,
+          and smooth interaction design.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-3xl font-bold text-primary mb-10">Certifications</h3>
+    <p class="text-gray-400 mb-8 max-w-2xl">
+      I continuously expand my technical knowledge through structured learning and certification programs.
+    </p>
+    <ul class="space-y-4 text-gray-400">
+      <li>✔ Microsoft Learn – Web Development Fundamentals</li>
+      <li>✔ freeCodeCamp – Responsive Web Design Developer</li>
+      <li>✔ Cisco Networking Academy – Introduction to IoT</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 px-6 text-center bg-black/30">
+  <h3 class="text-3xl font-bold mb-6">Interested in Building Scalable Systems?</h3>
+  <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+    I am actively seeking internship and full-time opportunities where I can contribute to backend systems,
+    API development, and full-stack application architecture.
+  </p>
+  <a href="#contact" class="bg-primary px-8 py-4 rounded-lg text-black font-bold hover:scale-105 transition">
+    Let's Connect
+  </a>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <h3 class="text-3xl font-bold text-primary mb-6">Contact Me</h3>
+    <p class="text-gray-400 mb-10">
+      Feel free to reach out for collaboration, internship opportunities, or technical discussions.
+    </p>
+
+    <form class="space-y-6 glass p-8 rounded-xl">
+      <input type="text" placeholder="Your Name" class="w-full p-3 bg-gray-800 rounded outline-none">
+      <input type="email" placeholder="Your Email" class="w-full p-3 bg-gray-800 rounded outline-none">
+      <textarea placeholder="Your Message" rows="4" class="w-full p-3 bg-gray-800 rounded outline-none"></textarea>
+      <button class="bg-primary px-6 py-3 rounded text-black font-semibold hover:scale-105 transition">
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
+
+<footer class="text-center py-6 text-gray-500">
+  © 2026 Rohan Adhikari | Designed & Developed with MERN Stack Focus
+</footer>
+
+<script>
+  new Typed('#typed', {
+    strings: ["Building Scalable Web Applications.", "Backend Architecture Specialist.", "Full Stack MERN Engineer."],
+    typeSpeed: 50,
+    backSpeed: 30,
+    loop: true
+  });
+
+  VanillaTilt.init(document.querySelectorAll(".project-card"), {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.3,
+  });
+
+  const cursorGlow = document.getElementById("cursorGlow");
+  document.addEventListener("mousemove", (e) => {
+    cursorGlow.style.left = e.clientX + "px";
+    cursorGlow.style.top = e.clientY + "px";
+  });
+</script>
+
+</body>
+</html>

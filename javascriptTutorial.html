@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="text">White</h1>
+    <button id="btn">White</button>
+    <script>
+        const btn = document.getElementById('btn');
+        const text = document.getElementById('text');
+        // btn.disabled = true;
+        btn.addEventListener('click', function() {
+            if (text.innerText === 'White') {
+                text.innerText = 'Black';
+                document.body.style.background = 'black';
+                text.style.color = 'white';
+                btn.innerText = 'Black';
+            } else {
+                text.innerText = 'White';
+                text.style.color = 'black';
+                document.body.style.backgroundColor = 'white';
+                btn.innerText = 'White';
+            }
+        });
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéDex Explorer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Pokedex.css">
+</head>
+<body>
+
+  <div class="loader" id="loader"><div class="pokeball-loader"></div></div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">×</button>
+      <div class="modal-header">
+        <div class="modal-bg-circle" id="modalBgCircle"></div>
+        <div class="modal-number" id="modalNumber"></div>
+        <img class="modal-img" id="modalImg" src="" alt="">
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-types" id="modalTypes"></div>
+      </div>
+      <div class="modal-body">
+        <div class="section-title">Base Stats</div>
+        <div class="stats-list" id="modalStats"></div>
+        <div class="section-title">Abilities</div>
+        <div class="abilities-list" id="modalAbilities"></div>
+      </div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="logo">PokéDex</div>
+    <div class="subtitle">Explorer — All Generations</div>
+  </header>
+
+  <div class="controls">
+    <div class="search-row">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search Pokémon name or #..." autocomplete="off">
+      <button class="btn" id="searchBtn">Search</button>
+      <button class="btn btn-random" id="randomBtn">🎲 Random</button>
+    </div>
+    <div class="filter-section">
+      <div class="filter-label">Filter by Type</div>
+      <div class="type-filters" id="typeFilters"></div>
+    </div>
+  </div>
+
+  <div id="gridContainer">
+    <div class="pokemon-grid" id="pokemonGrid"></div>
+    <div class="status" id="status" style="display:none"></div>
+  </div>
+
+  <script src="Pokedex.js"></script>
+</body>
+</html>

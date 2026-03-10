@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Task List</h2>
+    <ul id="list">
+        <li>Task 1</li>
+        <li>Task 2</li>
+        <li>Task 3</li>
+    </ul>
+</body>
+<script>
+    const list = document.querySelector("#list")
+    list.addEventListener("click", function (e) {
+        if (e.target.tagname === "LI") {
+            e.target.style.textDecoration = "line-through"
+        }
+    })
+</script>
+
+</html>

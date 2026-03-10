@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        h1 { font-family: 'Playfair Display', serif; }
+        .task-done { text-decoration: line-through; opacity: 0.45; }
+        li { animation: slideIn 0.25s ease; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-amber-50 flex items-start justify-center pt-20 px-4">
+
+    <div class="w-full max-w-md">
+        <!-- Header -->
+        <div class="mb-8">
+            <p class="text-xs uppercase tracking-widest text-amber-500 font-medium mb-1">My workspace</p>
+            <h1 class="text-4xl text-stone-800">To‑Do List</h1>
+        </div>
+
+        <!-- Input -->
+        <div class="flex gap-2 mb-8">
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="What needs to be done?"
+                class="flex-1 px-4 py-3 rounded-xl border-2 border-stone-200 bg-white text-stone-700 placeholder-stone-300 focus:outline-none focus:border-amber-400 transition-colors text-sm"
+            />
+            <button
+                id="addTask"
+                class="px-5 py-3 bg-amber-400 hover:bg-amber-500 active:scale-95 text-white font-medium rounded-xl transition-all text-sm shadow-sm"
+            >
+                Add
+            </button>
+        </div>
+
+        <!-- Task List -->
+        <ul id="list" class="space-y-2"></ul>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="text-center py-12 text-stone-300">
+            <svg class="mx-auto mb-3 w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            <p class="text-sm">No tasks yet — add one above</p>
+        </div>
+    </div>
+
+    <script>
+        const list      = document.querySelector("#list");
+        const add       = document.querySelector("#addTask");
+        const taskInput = document.querySelector("#taskInput");
+        const empty     = document.querySelector("#emptyState");
+        const arr       = [];
+
+        function updateEmpty() {
+            empty.style.display = arr.length === 0 ? "block" : "none";
+        }
+
+        function createTaskItem(task) {
+            const li     = document.createElement("li");
+            const span   = document.createElement("span");
+            const button = document.createElement("button");
+
+            span.textContent = task;
+            span.className   = "flex-1 text-stone-700 text-sm cursor-pointer select-none";
+
+            button.textContent = "Delete";
+            button.className   = "text-xs text-stone-300 hover:text-red-400 transition-colors font-medium px-2 py-1 rounded-lg hover:bg-red-50";
+
+            li.className = "flex items-center gap-3 bg-white px-4 py-3 rounded-xl border border-stone-100 shadow-sm group";
+
+            button.addEventListener("click", () => {
+                li.style.opacity    = "0";
+                li.style.transform  = "translateX(12px)";
+                li.style.transition = "all 0.2s ease";
+                setTimeout(() => {
+                    list.removeChild(li);
+                    const i = arr.indexOf(task);
+                    if (i > -1) { arr.splice(i, 1); localStorage.setItem("tasks", arr); }
+                    updateEmpty();
+                }, 200);
+            });
+
+            span.addEventListener("click", () => span.classList.toggle("task-done"));
+
+            li.appendChild(span);
+            li.appendChild(button);
+            return li;
+        }
+
+        // Load from localStorage
+        if (localStorage.getItem("tasks")) {
+            const tasks = localStorage.getItem("tasks").split(",");
+            arr.push(...tasks);
+            arr.forEach(t => list.appendChild(createTaskItem(t)));
+        }
+        updateEmpty();
+
+        // Add task
+        add.addEventListener("click", () => {
+            const task = taskInput.value.trim();
+            if (!task) return;
+            list.appendChild(createTaskItem(task));
+            arr.push(task);
+            localStorage.setItem("tasks", arr);
+            taskInput.value = "";
+            updateEmpty();
+        });
+
+        // Enter key support
+        taskInput.addEventListener("keydown", e => { if (e.key === "Enter") add.click(); });
+    </script>
+</body>
+</html>

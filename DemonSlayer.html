@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demon Slayer — Character Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:   #0a0608;
+    --deep:    #110d0f;
+    --card:    #1a1215;
+    --border:  #2e1f24;
+    --crimson: #c0182a;
+    --gold:    #d4a017;
+    --gold2:   #f0c84a;
+    --teal:    #2a8c8c;
+    --text:    #e8d9c0;
+    --muted:   #8a7060;
+    --human:   #c0182a;
+    --demon:   #6a0dad;
+    --half:    #1a6e6e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BG texture */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% -10%, #3a0a1220 0%, transparent 70%),
+      radial-gradient(ellipse 60% 60% at 90% 110%, #0a1a3a18 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23d4a01710'/%3E%3C/svg%3E") repeat;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-kana {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 6px;
+    color: var(--crimson);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.9;
+  }
+  header h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(28px, 6vw, 58px);
+    font-weight: 900;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 40%, var(--gold) 70%, #fff8dc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    text-shadow: none;
+  }
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 8px;
+    color: var(--muted);
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+  .header-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; margin-top: 24px;
+  }
+  .header-divider::before, .header-divider::after {
+    content: '';
+    flex: 1; max-width: 180px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .header-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    position: relative; z-index: 10;
+    max-width: 900px; margin: 0 auto;
+    padding: 32px 20px 24px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .search-row {
+    display: flex; gap: 10px;
+  }
+  .search-wrap {
+    flex: 1; position: relative;
+  }
+  .search-wrap svg {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; color: var(--muted); pointer-events: none;
+  }
+  input[type="text"] {
+    width: 100%; padding: 12px 14px 12px 40px;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    outline: none;
+    transition: border-color .25s;
+  }
+  input[type="text"]::placeholder { color: var(--muted); }
+  input[type="text"]:focus { border-color: var(--crimson); }
+
+  .btn {
+    padding: 12px 22px;
+    border: 1px solid;
+    border-radius: 3px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--crimson);
+    border-color: var(--crimson);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #e01f33; border-color: #e01f33; }
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .btn-ghost:hover { background: var(--gold)22; }
+
+  /* race filter chips */
+  .race-filters {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .race-chip {
+    padding: 6px 18px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all .2s;
+    color: var(--muted);
+  }
+  .race-chip.active { color: var(--black); font-weight: 600; }
+  .race-chip[data-race="all"].active        { background: var(--gold); border-color: var(--gold); color: var(--black); }
+  .race-chip[data-race="Human"].active      { background: var(--human); border-color: var(--human); color: #fff; }
+  .race-chip[data-race="Demon"].active      { background: var(--demon); border-color: var(--demon); color: #fff; }
+  .race-chip[data-race="Human/Demon"].active{ background: var(--half); border-color: var(--half); color: #fff; }
+  .race-chip:not(.active):hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── PAGE NAV ── */
+  .page-info {
+    text-align: center; z-index: 10; position: relative;
+    font-family: 'Cinzel', serif; font-size: 11px;
+    letter-spacing: 3px; color: var(--muted);
+    padding-bottom: 8px;
+  }
+  .page-nav {
+    display: flex; justify-content: center; gap: 12px;
+    position: relative; z-index: 10;
+    padding: 0 20px 28px;
+  }
+  .page-nav .btn { padding: 8px 18px; font-size: 11px; }
+  .page-nav .btn:disabled { opacity: .3; cursor: default; pointer-events: none; }
+
+  /* ── GRID ── */
+  #pokemonGrid {
+    position: relative; z-index: 10;
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 20px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  /* ── CARD ── */
+  .char-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+    animation: fadeUp .4s ease both;
+    position: relative;
+  }
+  .char-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .char-card:hover { transform: translateY(-5px); border-color: var(--gold)55; box-shadow: 0 12px 40px #00000070; }
+  .char-card:hover::before { opacity: 1; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-img-wrap {
+    width: 100%; aspect-ratio: 1;
+    background: var(--deep);
+    overflow: hidden; position: relative;
+  }
+  .card-img-wrap::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(to top, var(--card), transparent);
+  }
+  .card-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .char-card:hover .card-img { transform: scale(1.05); }
+
+  .card-body { padding: 14px 16px 18px; }
+  .card-id {
+    font-family: 'Cinzel', serif;
+    font-size: 10px; letter-spacing: 3px;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 15px; font-weight: 600;
+    letter-spacing: 1px; color: var(--text);
+    margin-bottom: 10px;
+  }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .race-badge {
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .badge-Human  { background: var(--human)30; color: #e06070; border: 1px solid var(--human)60; }
+  .badge-Demon  { background: var(--demon)30; color: #b060e0; border: 1px solid var(--demon)60; }
+  .badge-half   { background: var(--half)30;  color: #50c0c0; border: 1px solid var(--half)60; }
+  .badge-other  { background: #2a200028;       color: var(--muted); border: 1px solid var(--border); }
+
+  .card-age {
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  /* ── STATUS ── */
+  #status {
+    display: none;
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 80px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px; letter-spacing: 2px;
+    color: var(--muted);
+  }
+  #status .big { display: block; font-size: 48px; margin-bottom: 16px; }
+
+  /* ── LOADER ── */
+  #loader {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: #0a060890;
+    backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  #loader.active { display: flex; }
+  .loader-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .loader-ring {
+    width: 56px; height: 56px;
+    border: 2px solid var(--border);
+    border-top-color: var(--gold);
+    border-right-color: var(--crimson);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text {
+    font-family: 'Cinzel', serif;
+    font-size: 11px; letter-spacing: 4px;
+    color: var(--muted); text-transform: uppercase;
+  }
+
+  /* ── MODAL ── */
+  #modalOverlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: #00000095;
+    backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  #modalOverlay.open { display: flex; }
+
+  .modal {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    max-width: 680px; width: 100%;
+    position: relative;
+    overflow: hidden;
+    animation: modalIn .3s cubic-bezier(.16,1,.3,1) both;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(24px) scale(.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-top-bar {
+    height: 3px;
+    background: linear-gradient(to right, var(--crimson), var(--gold), var(--teal));
+  }
+  #modalClose {
+    position: absolute; top: 14px; right: 14px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 2px; width: 32px; height: 32px;
+    cursor: pointer; color: var(--muted); font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; z-index: 10;
+  }
+  #modalClose:hover { border-color: var(--crimson); color: var(--crimson); }
+
+  .modal-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+  }
+  @media (max-width: 540px) {
+    .modal-layout { grid-template-columns: 1fr; }
+    .modal-img-col { height: 260px; }
+  }
+
+  .modal-img-col {
+    position: relative; overflow: hidden;
+    background: var(--card);
+    min-height: 320px;
+  }
+  #modalBg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: top center;
+    filter: blur(12px) brightness(.4) saturate(1.5);
+    transform: scale(1.1);
+  }
+  #modalImg {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+  }
+  .modal-num-overlay {
+    position: absolute; bottom: 12px; left: 12px; z-index: 2;
+    font-family: 'Cinzel', serif; font-size: 11px;
+    letter-spacing: 3px; color: var(--gold);
+    background: #00000080; padding: 4px 10px; border-radius: 2px;
+  }
+
+  .modal-info { padding: 28px 28px 24px; overflow-y: auto; max-height: 520px; }
+  #modalName {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: 1px; color: var(--text);
+    line-height: 1.2; margin-bottom: 10px;
+  }
+  #modalTags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+
+  .modal-divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+    margin: 16px 0;
+  }
+
+  .modal-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 4px;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  #modalQuote {
+    font-style: italic; font-size: 15px;
+    color: var(--muted); line-height: 1.7;
+    border-left: 2px solid var(--crimson);
+    padding-left: 14px; margin-bottom: 4px;
+  }
+
+  #modalDesc {
+    font-size: 14px; line-height: 1.8;
+    color: #c0b0a0;
+  }
+
+  .meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 4px;
+  }
+  .meta-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 3px; padding: 10px 14px;
+  }
+  .meta-label {
+    font-family: 'Cinzel', serif; font-size: 9px;
+    letter-spacing: 3px; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .meta-value {
+    font-family: 'Cinzel', serif; font-size: 13px;
+    color: var(--text); font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-ring"></div>
+    <div class="loader-text">Loading...</div>
+  </div>
+</div>
+
+<header>
+  <div class="header-kana">鬼滅の刃</div>
+  <h1>Demon Slayer</h1>
+  <div class="header-sub">Character Archive</div>
+  <div class="header-divider"><div class="header-diamond"></div></div>
+</header>
+
+<div class="controls">
+  <div class="search-row">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search by name…">
+    </div>
+    <button class="btn btn-primary" id="searchBtn">Search</button>
+    <button class="btn btn-ghost" id="randomBtn">Random</button>
+  </div>
+  <div class="race-filters" id="raceFilters"></div>
+</div>
+
+<div class="page-info" id="pageInfo"></div>
+<div class="page-nav" id="pageNav">
+  <button class="btn btn-ghost" id="prevBtn" disabled>← Prev</button>
+  <button class="btn btn-ghost" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="pokemonGrid"></div>
+<div id="status"></div>
+
+<!-- MODAL -->
+<div id="modalOverlay">
+  <div class="modal">
+    <div class="modal-top-bar"></div>
+    <button id="modalClose">✕</button>
+    <div class="modal-layout">
+      <div class="modal-img-col">
+        <div id="modalBg"></div>
+        <img id="modalImg" src="" alt="">
+        <div class="modal-num-overlay" id="modalNum"></div>
+      </div>
+      <div class="modal-info">
+        <div id="modalName"></div>
+        <div id="modalTags"></div>
+        <div class="modal-section-title">Quote</div>
+        <div id="modalQuote"></div>
+        <div class="modal-divider"></div>
+        <div class="modal-section-title">Profile</div>
+        <div class="meta-grid" id="modalMeta"></div>
+        <div class="modal-divider"></div>
+        <div class="modal-section-title">About</div>
+        <div id="modalDesc"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const BASE_URL   = 'https://www.demonslayer-api.com/api/v1/characters';
+
+
+let allChars     = [];
+let currentFilter = 'all';
+let isSearchMode  = false;
+let searchResults = [];
+
+const loader       = document.getElementById('loader');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose   = document.getElementById('modalClose');
+const searchInput  = document.getElementById('searchInput');
+const searchBtn    = document.getElementById('searchBtn');
+const randomBtn    = document.getElementById('randomBtn');
+const raceFilters  = document.getElementById('raceFilters');
+const grid         = document.getElementById('pokemonGrid');
+const statusEl     = document.getElementById('status');
+const pageInfo     = document.getElementById('pageInfo');
+const pageNav      = document.getElementById('pageNav');
+
+// Hide page nav — not needed with full load
+pageNav.style.display = 'none';
+pageInfo.style.display = 'none';
+
+function showLoader(v) { loader.classList.toggle('active', v); }
+
+function raceBadgeClass(race) {
+  if (!race) return 'badge-other';
+  const r = race.toLowerCase();
+  if (r.includes('human') && r.includes('demon')) return 'badge-half';
+  if (r.includes('human')) return 'badge-Human';
+  if (r.includes('demon')) return 'badge-Demon';
+  return 'badge-other';
+}
+
+function buildRaceFilters(chars) {
+  const races = ['all', ...new Set(chars.map(c => c.race).filter(Boolean))];
+  raceFilters.innerHTML = '';
+  races.forEach(race => {
+    const chip = document.createElement('div');
+    chip.className = 'race-chip' + (race === 'all' ? ' active' : '');
+    chip.dataset.race = race;
+    chip.textContent = race === 'all' ? `All (${chars.length})` : race;
+    chip.addEventListener('click', () => {
+      currentFilter = race;
+      document.querySelectorAll('.race-chip').forEach(c => c.classList.toggle('active', c.dataset.race === race));
+      const src = isSearchMode ? searchResults : allChars;
+      renderCards(filterByRace(src));
+    });
+    raceFilters.appendChild(chip);
+  });
+}
+
+function filterByRace(list) {
+  if (currentFilter === 'all') return list;
+  return list.filter(c => c.race === currentFilter);
+}
+
+async function loadAllCharacters() {
+  showLoader(true);
+  try {
+    // Fetch page 1 to discover totalPages
+    const first = await fetch(BASE_URL + "?page=1").then(r => r.json());
+    const total = first.pagination.totalPages;
+    // Fetch all remaining pages in parallel
+    const pageNums = Array.from({ length: total - 1 }, (_, i) => i + 2);
+    const rest = await Promise.all(
+      pageNums.map(p => fetch(BASE_URL + "?page=" + p).then(r => r.json()))
+    );
+    allChars = [
+      ...first.content,
+      ...rest.flatMap(d => d.content)
+    ].sort((a, b) => a.id - b.id);
+    isSearchMode = false;
+    buildRaceFilters(allChars);
+    renderCards(filterByRace(allChars));
+  } catch (err) {
+    showStatus('<span class="big">⚠️</span>Failed to load characters.');
+    console.error(err);
+  }
+  showLoader(false);
+}
+
+function renderCards(list) {
+  grid.innerHTML = '';
+  statusEl.style.display = 'none';
+
+  if (!list.length) {
+    showStatus('<span class="big">😕</span>No characters match this filter.');
+    return;
+  }
+
+  list.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className = 'char-card';
+    card.style.animationDelay = `${Math.min(i * 0.03, 1.2)}s`;
+
+    const badgeClass = raceBadgeClass(c.race);
+    card.innerHTML = `
+      <div class="card-img-wrap">
+        <img class="card-img" src="${c.img}" alt="${c.name}" loading="lazy"
+          onerror="this.src='https://via.placeholder.com/300x300/1a1215/8a7060?text=?'">
+      </div>
+      <div class="card-body">
+        <div class="card-id">#${String(c.id).padStart(3,'0')}</div>
+        <div class="card-name">${c.name}</div>
+        <div class="card-tags">
+          <span class="race-badge ${badgeClass}">${c.race || 'Unknown'}</span>
+          ${c.age ? `<span class="card-age">Age ${c.age}</span>` : ''}
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', () => openModal(c));
+    grid.appendChild(card);
+  });
+}
+
+function showStatus(html) {
+  grid.innerHTML = '';
+  statusEl.style.display = 'block';
+  statusEl.innerHTML = html;
+}
+
+function openModal(c) {
+  document.getElementById('modalBg').style.backgroundImage = `url(${c.img})`;
+  document.getElementById('modalImg').src  = c.img;
+  document.getElementById('modalImg').alt  = c.name;
+  document.getElementById('modalNum').textContent = `#${String(c.id).padStart(3,'0')}`;
+  document.getElementById('modalName').textContent = c.name;
+
+  const badgeClass = raceBadgeClass(c.race);
+  const genderColor = c.gender === 'Female' ? '#e080a0' : c.gender === 'Male' ? '#80a0e0' : '#a0a080';
+  document.getElementById('modalTags').innerHTML = `
+    <span class="race-badge ${badgeClass}">${c.race || 'Unknown'}</span>
+    <span class="race-badge badge-other" style="color:${genderColor};border-color:${genderColor}44;background:${genderColor}18">
+      ${c.gender || '?'}
+    </span>
+  `;
+
+  document.getElementById('modalQuote').textContent = c.quote ? `"${c.quote}"` : 'No quote available.';
+  document.getElementById('modalDesc').textContent  = c.description || 'No description available.';
+
+  document.getElementById('modalMeta').innerHTML = `
+    ${c.age    ? `<div class="meta-item"><div class="meta-label">Age</div><div class="meta-value">${c.age}</div></div>` : ''}
+    ${c.gender ? `<div class="meta-item"><div class="meta-label">Gender</div><div class="meta-value">${c.gender}</div></div>` : ''}
+    ${c.race   ? `<div class="meta-item"><div class="meta-label">Race</div><div class="meta-value">${c.race}</div></div>` : ''}
+    <div class="meta-item"><div class="meta-label">Arc</div><div class="meta-value">#${c.arc_id || '?'}</div></div>
+  `;
+
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleSearch() {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) {
+    isSearchMode = false;
+    renderCards(filterByRace(allChars));
+    return;
+  }
+  const results = allChars.filter(c =>
+    c.name.toLowerCase().includes(q) || String(c.id) === q
+  );
+  if (results.length) {
+    isSearchMode  = true;
+    searchResults = results;
+    renderCards(filterByRace(results));
+  } else {
+    showStatus(`<span class="big">🔍</span>No characters found for "<strong>${q}</strong>"`);
+  }
+}
+
+function loadRandom() {
+  if (!allChars.length) return;
+  openModal(allChars[Math.floor(Math.random() * allChars.length)]);
+}
+
+// Events
+searchBtn.addEventListener('click', handleSearch);
+searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleSearch(); });
+searchInput.addEventListener('input', () => { if (!searchInput.value.trim()) { isSearchMode = false; renderCards(filterByRace(allChars)); } });
+randomBtn.addEventListener('click', loadRandom);
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+loadAllCharacters();
+</script>
+</body>
+</html>

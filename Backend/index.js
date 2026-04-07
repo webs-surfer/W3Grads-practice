@@ -9,8 +9,9 @@ const data = [
 app.get('/',(req,res)=>{
     res.json("server is running")
 })
-app.get('/data',(req,res)=>{
-    res.json(data)
+app.get('/data/:id',(req,res)=>{
+    const data_id = parseInt(req.params.id);
+    res.json({data_id,data});
 })
 app.listen(port,()=>{
     console.log(`Server is running at ${port}`)
